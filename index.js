@@ -1,13 +1,11 @@
 const express = require("express");
-
 const app = express();
+const admin = require("firebase-admin");
+const serviceAccount = require("./effe-21ca-firebase-adminsdk.json");
+
 app.use(express.json());
 
 const port = process.env.PORT || 3000;
-
-const admin = require("firebase-admin");
-
-const serviceAccount = require("./effe-21ca-firebase-adminsdk.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
