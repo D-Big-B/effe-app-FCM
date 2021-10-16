@@ -1,34 +1,37 @@
 const express = require("express");
-const admin = require("firebase-admin");
 
 const app = express();
 app.use(express.json());
 
 const port = process.env.PORT || 3000;
 
-// const notification_options = {
-//   priority: "high",
-//   timeToLive: 60 * 60 * 24,
-// };
+const admin = require("firebase-admin");
 
-app.get("/", (req, res) => {
-  res.status(200).send("<h1>Effe-21 FCM</h1>");
+const serviceAccount = require("./effe-21ca-firebase-adminsdk.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://effe-21ca-default-rtdb.firebaseio.com",
 });
 
-app.post("/firebase/notification", (req, res) => {
-  // const registrationToken = "general";
+app.post("/push", (req, res) => {
   const message = req.body.message;
-  // const options = notification_options;
 
   admin
     .messaging()
     .send(message)
-    .then((res) => {
-      res.status(200).send("Notification sent successfully");
+    .then((response) => {
+      console.log("Notification sent successfully : " + response);
+      res.send("Notification sent successfully");
     })
     .catch((error) => {
-      res.status(400).send("Error : " + error);
+      console.log("Error : " + error);
+      res.send("error : " + error);
     });
+});
+
+app.get("/", (req, res) => {
+  res.status(200).send("<h1>Effe-21 FCM</h1>");
 });
 
 app.listen(port, () => {
