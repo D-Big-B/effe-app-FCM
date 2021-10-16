@@ -3,6 +3,22 @@ const app = express();
 const admin = require("firebase-admin");
 const serviceAccount = require("./effe-21ca-firebase-adminsdk.json");
 
+/**
+ *  JSON Format for body
+ 
+  {
+
+	"message" :{
+		"notification" : {
+			"title" : "Effe",
+			"body" : "Checking push notification"
+		},
+		"topic" : "general"
+	}
+}
+
+ */
+
 app.use(express.json());
 
 const port = process.env.PORT || 3000;
