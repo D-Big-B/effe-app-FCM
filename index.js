@@ -12,13 +12,11 @@ const notification_options = {
 };
 
 app.get("/", (req, res) => {
-  console.log("Hello");
-
   res.status(200).send("<h1>Effe-21 FCM</h1>");
 });
 
 app.post("/firebase/notification", (req, res) => {
-  const registrationToken = req.body.registrationToken;
+  const registrationToken = "general";
   const message = req.body.message;
   const options = notification_options;
 
